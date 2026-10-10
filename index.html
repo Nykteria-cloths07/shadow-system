@@ -3,183 +3,217 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#070710">
-<title>SHADOW SYSTEM</title>
-
+<meta name="theme-color" content="#050610">
+<title>SHADOW SYSTEM — Ultimate</title>
 <style>
 :root {
-  --bg:#070710;
-  --panel:#10111f;
-  --panel2:#17192a;
-  --line:#292c48;
-  --blue:#66d9ff;
-  --purple:#a58aff;
-  --text:#f2f3ff;
-  --muted:#8b91ad;
-  --green:#70f0bc;
+  --bg:#050610;
+  --panel:#0d1020;
+  --panel2:#141a2e;
+  --line:#283452;
+  --blue:#64dfff;
+  --violet:#9670ff;
+  --text:#f3f6ff;
+  --muted:#8d9bb9;
+  --green:#72f4bf;
+  --danger:#ff7598;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Arial,sans-serif;overflow-x:hidden;
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Arial,Helvetica,sans-serif;overflow-x:hidden;
 }
-body:before{
-  content:"";position:fixed;inset:0;pointer-events:none;
-  background:
-  radial-gradient(ellipse at 10% 0%,#17305235,transparent 45%),
-  radial-gradient(ellipse at 90% 40%,#552b7730,transparent 45%);
-  z-index:-1;
-}
-button,input,textarea{font:inherit}
+button,input,textarea,select{font:inherit}
 button{cursor:pointer}
+#particles{
+ position:fixed;inset:0;width:100%;height:100%;
+ z-index:-1;pointer-events:none;opacity:.7;
+}
+.ambient{
+ position:fixed;inset:0;z-index:-2;pointer-events:none;
+ background:
+ radial-gradient(ellipse at 12% 5%,#153b7044,transparent 45%),
+ radial-gradient(ellipse at 92% 55%,#5a237c2a,transparent 45%);
+ animation:ambient 12s ease-in-out infinite alternate;
+}
+@keyframes ambient{
+ from{filter:hue-rotate(0deg);transform:scale(1)}
+ to{filter:hue-rotate(25deg);transform:scale(1.08)}
+}
 header{
-  padding:25px 18px 20px;
-  border-bottom:1px solid var(--line);
-  background:#090a14dd;
-  position:sticky;top:0;z-index:10;
-  backdrop-filter:blur(16px);
+ position:sticky;top:0;z-index:10;
+ background:#070914eF;backdrop-filter:blur(18px);
+ border-bottom:1px solid #28345299;
+ padding:17px 15px 12px;
 }
-.headerrow{max-width:760px;margin:auto;display:flex;justify-content:space-between;align-items:center}
-.brand{font-weight:900;letter-spacing:3px;font-size:19px}
-.brand span{color:var(--blue)}
-.status{font-size:9px;color:var(--green);letter-spacing:2px;margin-top:7px}
-.pill{border:1px solid var(--line);padding:8px 10px;border-radius:20px;color:var(--blue);font-size:10px}
+.headerrow,.navinner{max-width:800px;margin:auto}
+.headerrow{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{font-size:18px;font-weight:900;letter-spacing:3px}
+.brand span{color:var(--blue);text-shadow:0 0 18px #64dfff70}
+.status{font-size:9px;letter-spacing:2px;color:var(--green);margin-top:6px}
+.pill,.badge{
+ font-size:10px;color:var(--blue);padding:7px 10px;
+ border:1px solid #314263;border-radius:30px;background:#111a2d;
+}
 nav{
- display:flex;gap:8px;overflow-x:auto;padding:13px 0 2px;
- max-width:760px;margin:auto;scrollbar-width:none
+ display:flex;gap:7px;overflow-x:auto;padding:15px 0 1px;
+ max-width:800px;margin:auto;scrollbar-width:none;
 }
+nav::-webkit-scrollbar{display:none}
 nav button{
- flex-shrink:0;background:var(--panel);border:1px solid var(--line);
- color:var(--muted);padding:10px 13px;border-radius:9px;font-size:11px;
- transition:.25s;
+ flex-shrink:0;color:var(--muted);background:#0e1120;
+ border:1px solid #252d45;border-radius:9px;padding:10px 12px;
+ font-size:10px;letter-spacing:.4px;transition:background .25s,border-color .25s,color .25s,transform .25s;
 }
 nav button.active,nav button:hover{
- color:white;border-color:var(--blue);background:#142238;
- box-shadow:0 0 15px #66d9ff18;
+ color:white;background:#152846;border-color:var(--blue);
+ box-shadow:0 0 18px #64dfff16;
 }
-main{max-width:760px;margin:auto;padding:17px 14px 55px}
-.page{display:none;animation:enter .4s ease}
-.page.active{display:block}
-@keyframes enter{
- from{opacity:0;transform:translateY(10px)}
- to{opacity:1;transform:translateY(0)}
-}
-@keyframes glow{
- 0%,100%{box-shadow:0 0 10px #66d9ff08}
- 50%{box-shadow:0 0 25px #66d9ff20}
-}
-@keyframes shine{
- from{background-position:200% 0}
- to{background-position:-200% 0}
-}
-@keyframes levelup{
- 0%{opacity:0;transform:scale(.6)}
- 20%{opacity:1;transform:scale(1.08)}
- 75%{opacity:1;transform:scale(1)}
- 100%{opacity:0;transform:scale(1.2)}
+nav button:active{transform:scale(.96)}
+main{max-width:800px;margin:auto;padding:20px 14px 60px}
+.page{display:none}
+.page.active{display:block;animation:pageIn .45s cubic-bezier(.2,.75,.25,1) both}
+@keyframes pageIn{
+ from{opacity:0;transform:translateY(14px);filter:blur(3px)}
+ to{opacity:1;transform:translateY(0);filter:blur(0)}
 }
 .card{
- background:linear-gradient(145deg,#121526f5,#0c0d19f5);
- border:1px solid var(--line);border-radius:17px;
- padding:18px;margin-bottom:13px;
- animation:glow 5s infinite;
+ background:linear-gradient(145deg,#11182af2,#0a0d1af5);
+ border:1px solid #263451;border-radius:16px;
+ padding:18px;margin-bottom:13px;position:relative;overflow:hidden;
+ transition:border-color .3s,transform .3s,box-shadow .3s;
 }
+.card:hover{border-color:#425a83;box-shadow:0 0 22px #64dfff0b}
 .hero{
- background:linear-gradient(135deg,#172c48,#17142b 65%,#10111d);
- position:relative;overflow:hidden;
+ background:linear-gradient(120deg,#142d4a,#19152f 60%,#0e1323);
+ border-color:#344a70;box-shadow:0 0 35px #448bff15;
+}
+.hero:before{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(110deg,transparent 20%,#ffffff07 48%,transparent 72%);
+ background-size:220% 100%;animation:scan 7s linear infinite;
 }
 .hero:after{
- content:"";position:absolute;right:-55px;top:-85px;
- width:200px;height:200px;border:1px solid #66d9ff35;
- border-radius:50%;box-shadow:0 0 0 25px #66d9ff08,0 0 0 50px #66d9ff05;
- pointer-events:none;
+ content:"";position:absolute;width:180px;height:180px;right:-75px;top:-90px;
+ border:1px solid #64dfff44;border-radius:50%;
+ box-shadow:0 0 0 20px #64dfff08,0 0 0 42px #64dfff05;
+ animation:orb 8s ease-in-out infinite;
 }
-.eyebrow{font-size:10px;letter-spacing:2px;color:var(--blue)}
-h1{font-size:27px;letter-spacing:2px;margin:12px 0}
-h2{font-size:18px;margin:8px 0 12px}
+@keyframes scan{to{background-position:-220% 0}}
+@keyframes orb{50%{transform:scale(1.12);opacity:.5}}
+.eyebrow{font-size:10px;color:var(--blue);letter-spacing:2px}
+h1{font-size:27px;letter-spacing:2px;margin:13px 0}
+h2{font-size:18px;margin:8px 0 13px}
 h3{font-size:14px;margin:0 0 8px}
-p{color:#aeb4ce;font-size:13px;line-height:1.65}
-.small{font-size:11px;color:var(--muted)}
+p{font-size:12px;line-height:1.7;color:#aebbd5}
+.small{font-size:10px;color:var(--muted)}
 .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.level{font-size:35px;font-weight:900}
-.rank{color:var(--purple);font-size:12px;letter-spacing:2px}
-.bar{height:8px;border-radius:20px;background:#25283b;overflow:hidden;margin:12px 0}
+.level{font-size:38px;font-weight:900;text-shadow:0 0 22px #64dfff32}
+.rank{font-size:12px;color:var(--violet);letter-spacing:2px}
+.bar{height:8px;background:#242c43;border-radius:30px;overflow:hidden;margin:12px 0}
 .fill{
- height:100%;width:0;border-radius:20px;
- background:linear-gradient(90deg,#558aff,#66e4ff,#b3a1ff);
- background-size:200% 100%;animation:shine 4s linear infinite;
- transition:width .7s cubic-bezier(.2,.8,.2,1);
+ width:0;height:100%;border-radius:30px;
+ background:linear-gradient(90deg,#347cff,#64dfff,#a68aff);
+ background-size:200% 100%;transition:width 1s cubic-bezier(.15,.8,.25,1);
+ animation:barGlow 3s linear infinite;
 }
+@keyframes barGlow{to{background-position:200% 0}}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{background:var(--panel2);padding:14px;border-radius:12px;border:1px solid #242740}
-.stat strong{font-size:24px;display:block;margin-top:8px}
-.statname{font-size:10px;letter-spacing:1px;color:var(--muted)}
+.stat{background:linear-gradient(135deg,#151c30,#111525);border:1px solid #242e48;padding:14px;border-radius:12px;transition:.25s}
+.stat:hover{transform:translateY(-2px);border-color:#4c6e9e}
+.stat strong{display:block;font-size:25px;margin-top:8px}
+.statname{font-size:9px;letter-spacing:1px;color:var(--muted)}
 .sectiontitle{display:flex;justify-content:space-between;align-items:center;margin:24px 2px 12px}
 .sectiontitle h2{margin:0}
-.badge{font-size:10px;color:var(--blue);background:#17263a;padding:6px 9px;border-radius:20px}
-.quest{
- display:flex;align-items:center;gap:12px;padding:14px 0;
- border-bottom:1px solid #24263a;
-}
-.quest:last-child{border-bottom:0}
-.quest input{width:19px;height:19px;accent-color:#66d9ff;flex-shrink:0}
-.questtext{flex:1;font-size:13px}
-.questtext small{display:block;color:var(--muted);font-size:11px;margin-top:5px;line-height:1.5}
-.reward{font-size:11px;color:var(--blue);white-space:nowrap}
-.completed .questtext{text-decoration:line-through;color:var(--green)}
 .btn{
- background:linear-gradient(110deg,#367dff,#735dff);
- color:white;border:0;border-radius:10px;padding:12px 15px;
- font-weight:bold;font-size:12px;transition:transform .2s,filter .2s;
+ border:0;border-radius:10px;padding:12px 15px;
+ color:#fff;font-size:12px;font-weight:bold;
+ background:linear-gradient(110deg,#347dff,#7655ff);
+ transition:transform .2s,filter .2s,box-shadow .2s;
 }
-.btn:active{transform:scale(.96)}
-.btn.secondary{background:#191c2e;border:1px solid var(--line);color:var(--text)}
-.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:hover{filter:brightness(1.13);box-shadow:0 0 20px #568aff30}
+.btn:active{transform:scale(.97)}
+.btn.secondary{background:#141a2c;border:1px solid #34405c;color:#e9efff}
+.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .full{width:100%}
-.case{transition:transform .25s,border-color .25s}
-.case:active{transform:scale(.985)}
-.caseid{font-size:10px;letter-spacing:2px;color:var(--purple)}
-.tag{display:inline-block;font-size:10px;color:var(--blue);border:1px solid #283650;padding:5px 8px;border-radius:20px;margin:3px 3px 3px 0}
+.quest{display:flex;align-items:center;gap:11px;padding:14px 0;border-bottom:1px solid #242c41}
+.quest:last-child{border-bottom:0}
+.quest input{width:19px;height:19px;accent-color:var(--blue);flex-shrink:0}
+.questtext{font-size:12px;flex:1}
+.questtext small{display:block;font-size:10px;line-height:1.5;color:var(--muted);margin-top:5px}
+.reward{font-size:10px;color:var(--blue);white-space:nowrap}
+.completed .questtext{color:var(--green)}
+.completed .questtext strong{text-decoration:line-through}
+.quest input:checked{filter:drop-shadow(0 0 5px #64dfff)}
+.tag{display:inline-block;border:1px solid #2d4262;border-radius:30px;padding:5px 8px;font-size:9px;color:var(--blue);margin:3px}
+.caseid{font-size:10px;letter-spacing:2px;color:var(--violet)}
 input[type=text],textarea,select{
- width:100%;background:#090b16;border:1px solid var(--line);
- border-radius:10px;padding:12px;color:var(--text);margin:7px 0 13px;
- outline:none;
+ width:100%;background:#080b17;border:1px solid #2b3650;
+ color:var(--text);border-radius:9px;padding:12px;margin:7px 0 14px;outline:none;
 }
-textarea{resize:vertical;min-height:90px}
-input:focus,textarea:focus,select:focus{border-color:var(--blue)}
-label{font-size:11px;color:var(--muted)}
-hr{border:0;border-top:1px solid var(--line);margin:16px 0}
-.notice{padding:12px;border-radius:10px;background:#142337;color:#b9dfff;font-size:11px;line-height:1.6}
-footer{text-align:center;color:#555d78;font-size:10px;letter-spacing:2px;padding:25px 0}
+textarea{min-height:95px;resize:vertical}
+input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 2px #64dfff12}
+label{font-size:10px;color:var(--muted)}
+.notice{background:#112239;border:1px solid #263e5d;padding:13px;border-radius:10px;color:#bddcff;font-size:11px;line-height:1.7}
+hr{border:0;border-top:1px solid #28334c;margin:17px 0}
+footer{text-align:center;padding:30px 0;color:#606d89;font-size:9px;letter-spacing:2px}
 #toast{
- position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);
- background:#202840;border:1px solid #526eaa;border-radius:12px;
- padding:13px 18px;font-size:12px;opacity:0;pointer-events:none;
- transition:.3s;z-index:30;text-align:center;max-width:90%;
+ position:fixed;z-index:50;bottom:25px;left:50%;
+ transform:translate(-50%,20px);opacity:0;pointer-events:none;
+ padding:13px 17px;background:#131f36;border:1px solid #5279ad;
+ color:white;border-radius:11px;font-size:12px;text-align:center;
+ width:max-content;max-width:90%;transition:.3s;
+ box-shadow:0 0 25px #64dfff18;
 }
 #toast.show{opacity:1;transform:translate(-50%,0)}
-#levelup{
- display:none;position:fixed;inset:0;z-index:40;background:#050611eF;
+#levelup,#intro{
+ display:none;position:fixed;inset:0;z-index:60;
  align-items:center;justify-content:center;text-align:center;
+ background:#040611f5;backdrop-filter:blur(12px);padding:24px;
 }
-#levelup.show{display:flex}
-.levelbox{animation:levelup 2.2s forwards}
-.levelbox h1{font-size:38px;color:var(--blue);text-shadow:0 0 30px #66d9ff80}
-@media(min-width:600px){main{padding-top:24px}.card{padding:22px}}
+#levelup.show,#intro.show{display:flex}
+.levelbox{animation:levelShow 2.5s ease both}
+@keyframes levelShow{
+ 0%{opacity:0;transform:scale(.65)}
+ 18%{opacity:1;transform:scale(1.07)}
+ 30%,78%{opacity:1;transform:scale(1)}
+ 100%{opacity:0;transform:scale(1.12)}
+}
+.levelbox h1{color:var(--blue);font-size:38px;text-shadow:0 0 35px #64dfff88}
+.introbox{animation:introIn 2.4s ease both}
+@keyframes introIn{
+ 0%{opacity:0;transform:scale(.96);letter-spacing:9px}
+ 20%,80%{opacity:1;transform:scale(1);letter-spacing:3px}
+ 100%{opacity:0;transform:scale(1.03)}
+}
+.introbox h1{font-size:26px}
+.flash{animation:flash .5s ease}
+@keyframes flash{50%{box-shadow:0 0 30px #64dfff5a;border-color:var(--blue)}}
+.particleburst{position:fixed;z-index:45;pointer-events:none;left:50%;top:50%}
+.particleburst i{position:absolute;width:5px;height:5px;background:var(--blue);border-radius:50%;animation:burst .8s ease-out forwards}
+@keyframes burst{to{transform:translate(var(--x),var(--y)) scale(0);opacity:0}}
+.settingsrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0}
+.switch{accent-color:var(--blue);width:18px;height:18px}
+@media(min-width:600px){main{padding-top:26px}.card{padding:22px}}
 @media(prefers-reduced-motion:reduce){
- *,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
+ *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
 </style>
 </head>
-
 <body>
+<div class="ambient"></div>
+<canvas id="particles"></canvas>
+
+<div id="intro"><div class="introbox">
+ <div class="eyebrow">AWAKENING PROTOCOL</div>
+ <h1>SHADOW SYSTEM</h1>
+ <p>YOUR JOURNEY BEGINS NOW.</p>
+</div></div>
+
 <header>
  <div class="headerrow">
-  <div>
-   <div class="brand">SHADOW <span>SYSTEM</span></div>
-   <div class="status">● SYSTEM ONLINE</div>
-  </div>
+  <div><div class="brand">SHADOW <span>SYSTEM</span></div><div class="status">● SYSTEM ONLINE // ULTIMATE</div></div>
   <div class="pill" id="headerLevel">LV. 1 · E-RANK</div>
  </div>
  <nav>
@@ -188,24 +222,22 @@ footer{text-align:center;color:#555d78;font-size:10px;letter-spacing:2px;padding
   <button data-page="challenges">♜ CHALLENGES</button>
   <button data-page="files">◈ UNKNOWN FILES</button>
   <button data-page="journal">▤ JOURNAL</button>
+  <button data-page="settings">⚙ SETTINGS</button>
  </nav>
 </header>
 
 <main>
-<!-- HOME -->
 <section class="page active" id="home">
- <div class="card hero">
+ <div class="card hero" id="playerCard">
   <div class="eyebrow">PLAYER PROFILE // ACTIVE</div>
-  <h1>THE AWAKENED</h1>
-  <p>Your story changes when your actions change.</p>
+  <h1>THE AWAKENED</h1><p>Your story changes when your actions change.</p>
   <div class="row">
    <div><div class="small">CURRENT LEVEL</div><div class="level" id="level">01</div></div>
-   <div style="text-align:right"><div class="small">CURRENT RANK</div><div class="rank" id="rank">E - RANK</div></div>
+   <div style="text-align:right"><div class="small">CURRENT RANK</div><div class="rank" id="rank">E-RANK</div></div>
   </div>
   <div class="bar"><div class="fill" id="xpbar"></div></div>
   <div class="row small"><span id="xptext">0 / 100 XP</span><span id="totaltext">0 TOTAL XP</span></div>
  </div>
-
  <div class="sectiontitle"><h2>PLAYER ATTRIBUTES</h2><span class="badge">LIVE STATUS</span></div>
  <div class="grid">
   <div class="stat"><div class="statname">💪 STRENGTH</div><strong id="strength">1</strong></div>
@@ -213,209 +245,132 @@ footer{text-align:center;color:#555d78;font-size:10px;letter-spacing:2px;padding
   <div class="stat"><div class="statname">🧠 INTELLIGENCE</div><strong id="intelligence">1</strong></div>
   <div class="stat"><div class="statname">🛡 DISCIPLINE</div><strong id="discipline">1</strong></div>
  </div>
-
  <div class="sectiontitle"><h2>TODAY'S PROGRESS</h2><span class="badge" id="progressCount">0 / 5</span></div>
  <div class="card">
-  <div class="row"><span class="small">Daily quest completion</span><b id="progressPercent">0%</b></div>
+  <div class="row"><span class="small">Quest completion</span><b id="progressPercent">0%</b></div>
   <div class="bar"><div class="fill" id="progressbar"></div></div>
   <p id="homeMessage">Your first mission is waiting.</p>
   <button class="btn full" onclick="showPage('quests')">VIEW DAILY QUESTS →</button>
  </div>
-
  <div class="card">
-  <div class="eyebrow">UNKNOWN FILES</div>
-  <h2>One mystery. One investigation.</h2>
-  <p>Research unusual claims, collect reliable evidence, compare theories, and document what you discover.</p>
+  <div class="eyebrow">UNKNOWN FILES</div><h2>One mystery. One investigation.</h2>
+  <p>Research unusual claims, compare theories, and document what you discover.</p>
   <button class="btn secondary full" onclick="showPage('files')">OPEN INVESTIGATION DIVISION →</button>
  </div>
+ <div class="card">
+  <div class="eyebrow">SYSTEM SETTINGS</div>
+  <div class="settingsrow"><span class="small">Cinematic sound effects</span><input class="switch" type="checkbox" id="soundQuick"></div>
+  <p class="small">Sound is off by default. You can enable it whenever you want.</p>
+ </div>
 </section>
 
-<!-- QUESTS -->
 <section class="page" id="quests">
- <div class="eyebrow">MISSION CONTROL</div>
- <h1>DAILY QUESTS</h1>
- <p>Complete real tasks to earn experience. Quests reset on the next local calendar day.</p>
+ <div class="eyebrow">MISSION CONTROL</div><h1>DAILY QUESTS</h1>
+ <p>Complete real tasks to earn XP. Missions reset on the next local calendar day.</p>
  <div class="card">
   <div class="row"><h2>Today's Missions</h2><span class="badge" id="questDate"></span></div>
-  <div id="questList"></div>
-  <hr>
+  <div id="questList"></div><hr>
   <div class="row"><span class="small">Daily completion</span><b id="questSummary">0 / 5</b></div>
   <div class="bar"><div class="fill" id="questbar"></div></div>
-  <p class="small">Only claim a mission after completing it. Rest and recovery count as productive choices too.</p>
+  <p class="small">Claim a mission only after doing it. Recovery is part of progress.</p>
  </div>
- <div class="notice">SYSTEM RULE: No XP penalty for missing a day. Start again when you're ready.</div>
+ <div class="notice">SYSTEM RULE: Missing a day does not erase your level or XP. Resume when you're ready.</div>
 </section>
 
-<!-- CHALLENGES -->
 <section class="page" id="challenges">
- <div class="eyebrow">SPECIAL MISSION DIVISION</div>
- <h1>CHALLENGES</h1>
- <p>Longer missions designed to reward consistency, not exhaustion.</p>
+ <div class="eyebrow">SPECIAL MISSION DIVISION</div><h1>CHALLENGES</h1>
  <div class="card">
-  <div class="caseid">CHALLENGE 001</div>
-  <h2>THE SEVEN-DAY AWAKENING</h2>
-  <p>Complete at least three daily quests on seven separate days. Days don't have to be consecutive.</p>
-  <div class="row"><span class="small">Days completed</span><b id="streakDays">0 / 7</b></div>
+  <div class="caseid">CHALLENGE 001</div><h2>THE SEVEN-DAY AWAKENING</h2>
+  <p>Complete at least three daily quests on seven separate days. The days need not be consecutive.</p>
+  <div class="row"><span class="small">Qualified days</span><b id="streakDays">0 / 7</b></div>
   <div class="bar"><div class="fill" id="streakbar"></div></div>
-  <div class="small" id="streakStatus">Your first day starts when you complete three quests.</div>
-  <hr>
+  <p id="streakStatus">Your first day begins when you complete three quests.</p>
   <button class="btn full" id="claimChallenge" onclick="claimChallenge()">CLAIM REWARD · 100 XP</button>
  </div>
  <div class="card">
-  <div class="caseid">CHALLENGE 002</div>
-  <h2>THE MYSTERY HUNTER</h2>
-  <p>Complete one research case with a question, evidence, at least two possible explanations, and a conclusion.</p>
-  <div class="row"><span class="small">Investigation progress</span><b id="caseCount">0 / 1</b></div>
-  <hr>
+  <div class="caseid">CHALLENGE 002</div><h2>THE MYSTERY HUNTER</h2>
+  <p>Document one research case with evidence, alternative explanations, and a conclusion.</p>
+  <div class="row"><span class="small">Completed cases</span><b id="caseCount">0 / 1</b></div><hr>
   <button class="btn secondary full" onclick="showPage('files')">START A CASE →</button>
  </div>
  <div class="card">
-  <div class="caseid">CHALLENGE 003</div>
-  <h2>THE KNOWLEDGE SEEKER</h2>
-  <p>Finish three documented research sessions. Record what you learned and which sources support it.</p>
-  <div class="row"><span class="small">Research sessions</span><b id="researchCount">0 / 3</b></div>
-  <hr>
-  <button class="btn secondary full" onclick="showPage('journal')">OPEN RESEARCH JOURNAL →</button>
+  <div class="caseid">CHALLENGE 003</div><h2>THE KNOWLEDGE SEEKER</h2>
+  <p>Document three research sessions and record your sources.</p>
+  <div class="row"><span class="small">Research sessions</span><b id="researchCount">0 / 3</b></div><hr>
+  <button class="btn secondary full" onclick="showPage('journal')">OPEN JOURNAL →</button>
  </div>
 </section>
 
-<!-- UNKNOWN FILES -->
 <section class="page" id="files">
- <div class="eyebrow">RESTRICTED ARCHIVE // RESEARCH DIVISION</div>
- <h1>UNKNOWN FILES</h1>
- <p>Unexplained does not automatically mean supernatural. Investigate the evidence before deciding.</p>
- <div class="notice">SAFE INVESTIGATION PROTOCOL: Use public information and accessible places. Never trespass, enter abandoned buildings, approach dangerous locations alone, or perform risky rituals.</div>
-
+ <div class="eyebrow">RESTRICTED ARCHIVE // RESEARCH DIVISION</div><h1>UNKNOWN FILES</h1>
+ <p>Unexplained does not automatically mean supernatural. Investigate the evidence first.</p>
+ <div class="notice">SAFETY PROTOCOL: Use public information and accessible places. Never trespass, enter abandoned buildings, or approach dangerous locations alone.</div>
  <div class="sectiontitle"><h2>RESEARCH BRANCHES</h2></div>
  <div class="grid">
   <div class="stat"><div class="statname">👻 BRANCH 01</div><h3>Paranormal</h3><p>Ghost reports, folklore, witness accounts.</p></div>
   <div class="stat"><div class="statname">🌀 BRANCH 02</div><h3>Unusual abilities</h3><p>Claims about psychic powers and perception.</p></div>
   <div class="stat"><div class="statname">🧩 BRANCH 03</div><h3>Unsolved mysteries</h3><p>Historical puzzles and strange discoveries.</p></div>
-  <div class="stat"><div class="statname">🔬 BRANCH 04</div><h3>Reality check</h3><p>Scientific evidence and alternative explanations.</p></div>
+  <div class="stat"><div class="statname">🔬 BRANCH 04</div><h3>Reality check</h3><p>Scientific evidence and alternatives.</p></div>
  </div>
-
  <div class="sectiontitle"><h2>OPEN A NEW CASE</h2><span class="badge">CASE FILE</span></div>
  <div class="card">
   <label for="caseBranch">RESEARCH BRANCH</label>
-  <select id="caseBranch">
-   <option>Paranormal</option>
-   <option>Unusual abilities</option>
-   <option>Unsolved mysteries</option>
-   <option>Scientific investigation</option>
-  </select>
-  <label for="caseTitle">CASE TITLE</label>
-  <input id="caseTitle" type="text" maxlength="100" placeholder="Example: The mystery of strange lights">
-  <label for="caseQuestion">RESEARCH QUESTION</label>
-  <textarea id="caseQuestion" maxlength="2000" placeholder="What exactly do you want to find out?"></textarea>
+  <select id="caseBranch"><option>Paranormal</option><option>Unusual abilities</option><option>Unsolved mysteries</option><option>Scientific investigation</option></select>
+  <label for="caseTitle">CASE TITLE</label><input id="caseTitle" type="text" maxlength="100" placeholder="Example: The mystery of strange lights">
+  <label for="caseQuestion">RESEARCH QUESTION</label><textarea id="caseQuestion" maxlength="2000" placeholder="What exactly do you want to find out?"></textarea>
   <button class="btn full" onclick="createCase()">＋ CREATE CASE FILE</button>
  </div>
-
  <div class="sectiontitle"><h2>YOUR CASE FILES</h2><span class="badge" id="caseTotal">0 FILES</span></div>
  <div id="caseList"></div>
  <div id="caseEditor" class="card" hidden>
   <div class="row"><div><div class="caseid" id="editCaseId"></div><h2 id="editCaseTitle">Investigation</h2></div><button class="btn secondary" onclick="closeCase()">CLOSE</button></div>
   <p id="editCaseQuestion"></p>
-  <label for="evidence">EVIDENCE AND SOURCES</label>
-  <textarea id="evidence" maxlength="5000" placeholder="Record observations, source names, dates, and what the evidence actually shows."></textarea>
-  <label for="theories">POSSIBLE EXPLANATIONS</label>
-  <textarea id="theories" maxlength="3000" placeholder="Compare at least two explanations. What supports or weakens each one?"></textarea>
+  <label for="evidence">EVIDENCE AND SOURCES</label><textarea id="evidence" maxlength="5000" placeholder="Record observations, source names, dates, and what the evidence shows."></textarea>
+  <label for="theories">POSSIBLE EXPLANATIONS</label><textarea id="theories" maxlength="3000" placeholder="Compare at least two explanations. What supports or weakens each?"></textarea>
   <label for="verdict">CURRENT CONCLUSION</label>
-  <select id="verdict">
-   <option>Unresolved</option>
-   <option>Evidence supports the claim</option>
-   <option>Evidence does not support the claim</option>
-   <option>Ordinary explanation is more likely</option>
-  </select>
+  <select id="verdict"><option>Unresolved</option><option>Evidence supports the claim</option><option>Evidence does not support the claim</option><option>Ordinary explanation is more likely</option></select>
   <button class="btn full" onclick="saveCase()">SAVE INVESTIGATION</button>
-  <p class="small">Save a complete case after documenting evidence, explanations, and a conclusion to earn the research reward.</p>
  </div>
 </section>
 
-<!-- JOURNAL -->
 <section class="page" id="journal">
- <div class="eyebrow">PERSONAL KNOWLEDGE ARCHIVE</div>
- <h1>RESEARCH JOURNAL</h1>
- <p>Record your findings so you can return to them later.</p>
+ <div class="eyebrow">PERSONAL KNOWLEDGE ARCHIVE</div><h1>RESEARCH JOURNAL</h1><p>Save your findings and revisit them later.</p>
  <div class="card">
-  <label for="journalTitle">SESSION TITLE</label>
-  <input id="journalTitle" type="text" maxlength="100" placeholder="What did you research?">
-  <label for="journalNotes">WHAT DID YOU LEARN?</label>
-  <textarea id="journalNotes" maxlength="5000" placeholder="Write your findings and what remains unknown."></textarea>
-  <label for="journalSources">SOURCES USED</label>
-  <textarea id="journalSources" maxlength="2000" placeholder="Book titles, article names, research papers, or source links."></textarea>
+  <label for="journalTitle">SESSION TITLE</label><input id="journalTitle" type="text" maxlength="100" placeholder="What did you research?">
+  <label for="journalNotes">WHAT DID YOU LEARN?</label><textarea id="journalNotes" maxlength="5000" placeholder="Record your findings and what remains unknown."></textarea>
+  <label for="journalSources">SOURCES USED</label><textarea id="journalSources" maxlength="2000" placeholder="Book titles, article names, research papers, or source links."></textarea>
   <button class="btn full" onclick="saveJournal()">SAVE RESEARCH SESSION</button>
  </div>
- <div class="sectiontitle"><h2>PREVIOUS SESSIONS</h2><span class="badge" id="journalCount">0 ENTRIES</span></div>
- <div id="journalList"></div>
- <div class="card">
-  <h3>YOUR DATA</h3>
-  <p>Your current progress is stored in this browser on this device. Clearing browser storage or changing browsers can erase or separate your progress.</p>
-  <button class="btn secondary full" onclick="exportData()">EXPORT BACKUP FILE</button>
- </div>
+ <div class="sectiontitle"><h2>PREVIOUS SESSIONS</h2><span class="badge" id="journalCount">0 ENTRIES</span></div><div id="journalList"></div>
+ <div class="card"><h3>YOUR DATA</h3><p>Progress is stored in this browser on this device. Clearing browser storage can erase it.</p><button class="btn secondary full" onclick="exportData()">EXPORT BACKUP FILE</button></div>
 </section>
 
+<section class="page" id="settings">
+ <div class="eyebrow">SYSTEM CONFIGURATION</div><h1>SETTINGS</h1>
+ <div class="card">
+  <h2>Experience</h2>
+  <div class="settingsrow"><span>Ambient particles</span><input class="switch" type="checkbox" id="particleToggle" checked></div>
+  <div class="settingsrow"><span>System sounds</span><input class="switch" type="checkbox" id="soundToggle"></div>
+  <div class="settingsrow"><span>Startup animation</span><input class="switch" type="checkbox" id="introToggle" checked></div>
+  <p class="small">Animations respect your device's reduced-motion setting.</p>
+ </div>
+ <div class="card"><h2>Backup & Recovery</h2><p>Export your player progress, quests, research cases, and journal as a JSON backup file.</p><button class="btn full" onclick="exportData()">EXPORT BACKUP</button></div>
+ <div class="card"><h2>Reset Demo</h2><p>This deletes local progress in this browser. Export a backup first if you want to keep it.</p><button class="btn secondary full" onclick="resetData()">RESET ALL LOCAL PROGRESS</button></div>
+</section>
 <footer>YOUR JOURNEY · YOUR DISCIPLINE · YOUR DISCOVERIES</footer>
 </main>
 
 <div id="toast"></div>
-<div id="levelup"><div class="levelbox"><div class="eyebrow">SYSTEM NOTIFICATION</div><h1>LEVEL UP!</h1><p id="levelupText">LEVEL 02 UNLOCKED</p></div></div>
+<div id="levelup"><div class="levelbox"><div class="eyebrow">SYSTEM NOTIFICATION</div><h1 id="levelupTitle">LEVEL UP!</h1><p id="levelupText">LEVEL 02 UNLOCKED</p></div></div>
 
 <script>
 const $=id=>document.getElementById(id);
-const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
-const defaults={
- xp:0,totalXP:0,level:1,
- stats:{strength:1,agility:1,intelligence:1,discipline:1},
- lastDate:today(),done:[],qualifiedDays:[],challengeClaimed:false,
- cases:[],journals:[],researchRewardIds:[],caseRewardIds:[]
-};
-let data;
-try{data=Object.assign({},defaults,JSON.parse(localStorage.getItem("shadowSystemSave"))||{});
- data.stats=Object.assign({},defaults.stats,data.stats);
- data.cases=Array.isArray(data.cases)?data.cases:[];
- data.journals=Array.isArray(data.journals)?data.journals:[];
- data.done=Array.isArray(data.done)?data.done:[];
- data.qualifiedDays=Array.isArray(data.qualifiedDays)?data.qualifiedDays:[];
- data.researchRewardIds=Array.isArray(data.researchRewardIds)?data.researchRewardIds:[];
- data.caseRewardIds=Array.isArray(data.caseRewardIds)?data.caseRewardIds:[];
-}catch{data=JSON.parse(JSON.stringify(defaults))}
-if(data.lastDate!==today()){data.lastDate=today();data.done=[]}
-function persist(){try{localStorage.setItem("shadowSystemSave",JSON.stringify(data))}catch(e){toast("Storage is full. Export a backup.");}}
-const missions=[
- {name:"Move your body",desc:"Complete suitable physical activity",xp:20,stat:"strength"},
- {name:"Practice coordination",desc:"Safely practise balance or footwork",xp:15,stat:"agility"},
- {name:"Study with focus",desc:"Complete one focused study session",xp:20,stat:"intelligence"},
- {name:"Complete a priority",desc:"Finish one important task",xp:15,stat:"discipline"},
- {name:"Recover properly",desc:"Take breaks and get enough rest",xp:15,stat:"discipline"}
-];
-function toast(msg){$("toast").textContent=msg;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2300)}
-function showPage(id){
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
- $(id).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});
-}
-document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>showPage(b.dataset.page));
-function rankFor(l){return l>=50?"S-RANK":l>=30?"A-RANK":l>=20?"B-RANK":l>=10?"C-RANK":l>=5?"D-RANK":"E-RANK"}
-function addXP(n,stat){
- const old=data.level;
- data.xp+=n;data.totalXP+=n;
- if(stat)data.stats[stat]++;
- while(data.xp>=100){data.xp-=100;data.level++}
- persist();render();
- if(data.level>old){$("levelupText").textContent="LEVEL "+String(data.level).padStart(2,"0")+" UNLOCKED";$("levelup").classList.add("show");setTimeout(()=>$("levelup").classList.remove("show"),2200)}
-}
-function render(){
- const rank=rankFor(data.level);
- $("level").textContent=String(data.level).padStart(2,"0");
- $("rank").textContent=rank;$("headerLevel").textContent="LV. "+data.level+" · "+rank;
- $("xptext").textContent=data.xp+" / 100 XP";
- $("totaltext").textContent=data.totalXP+" TOTAL XP";
- $("xpbar").style.width=data.xp+"%";
- for(const s in data.stats)$(s).textContent=data.stats[s];
- const count=data.done.length,percent=Math.round(count/missions.length*100);
- $("progressCount").textContent=count+" / "+missions.length;
- $("progressPercent").textContent=percent+"%";
- $("progressbar").style.width=percent+"%";
- $("homeMessage").textContent=count===5?"All daily missions completed. Excellent discipline.":count===0?"Your first mission is waiting.": "You've completed "+count+" mission"+(count===1?"":"s")+". Keep going at your own pace.";
- $("questDate").textContent=today();
- $("questList").innerHTML=missions.map((m,i)=>`<label class="quest ${data.done.includes(i)?"completed":""}"><input type="checkbox" ${data.done.
+const today=()=>{let d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const defaults={xp:0,totalXP:0,level:1,stats:{strength:1,agility:1,intelligence:1,discipline:1},lastDate:today(),done:[],qualifiedDays:[],challengeClaimed:false,cases:[],journals:[],researchRewardIds:[],caseRewardIds:[],settings:{particles:true,sound:false,intro:true}};
+function loadData(){
+ let saved={};
+ try{saved=JSON.parse(localStorage.getItem("shadowSystemSave"))||{}}catch{}
+ let old={};
+ try{old=JSON.parse(localStorage.getItem("shadowSystemSave"))||{}}catch{}
+ const d={...defaults,...saved};
+ d.stats={...defaults.stats,...(saved.stats||{})}
