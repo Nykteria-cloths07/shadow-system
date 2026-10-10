@@ -3,107 +3,419 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#070710">
 <title>SHADOW SYSTEM</title>
+
 <style>
+:root {
+  --bg:#070710;
+  --panel:#10111f;
+  --panel2:#17192a;
+  --line:#292c48;
+  --blue:#66d9ff;
+  --purple:#a58aff;
+  --text:#f2f3ff;
+  --muted:#8b91ad;
+  --green:#70f0bc;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#05070d;color:#eaf4ff;font-family:Arial,sans-serif}
-header{padding:25px 18px;background:linear-gradient(135deg,#101d35,#05070d);border-bottom:1px solid #244b79}
-.tag{color:#48c8ff;letter-spacing:4px;font-size:11px}
-h1{font-size:30px;letter-spacing:3px;margin:12px 0}
-main{max-width:700px;margin:auto;padding:18px}
-.card{background:#0c1220;border:1px solid #20334e;border-radius:15px;padding:18px;margin:14px 0;animation:appear .6s ease}
-@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.label{font-size:12px;color:#8fa9c9;letter-spacing:2px}
-.row{display:flex;justify-content:space-between;gap:12px;align-items:center}
-.bar{height:9px;background:#1b2639;border-radius:10px;overflow:hidden;margin-top:12px}
-.fill{height:100%;width:0;background:linear-gradient(90deg,#168cff,#55e7ff);transition:width .5s}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{padding:13px;background:#101b2d;border-radius:10px}
-.stat b{display:block;font-size:22px;margin-top:7px}
-.quest{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid #1b293e}
-.quest:last-child{border:0}
-.quest input{width:20px;height:20px;accent-color:#32c9ff}
-.quest small{display:block;color:#8fa9c9;margin-top:5px}
-button{background:#087cc2;color:white;border:0;border-radius:8px;padding:12px 15px;font-weight:bold}
-button:active{transform:scale(.96)}
-.done{color:#5be8b0}
-footer{text-align:center;color:#637995;font-size:11px;padding:25px}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,sans-serif;overflow-x:hidden;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:
+  radial-gradient(ellipse at 10% 0%,#17305235,transparent 45%),
+  radial-gradient(ellipse at 90% 40%,#552b7730,transparent 45%);
+  z-index:-1;
+}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+header{
+  padding:25px 18px 20px;
+  border-bottom:1px solid var(--line);
+  background:#090a14dd;
+  position:sticky;top:0;z-index:10;
+  backdrop-filter:blur(16px);
+}
+.headerrow{max-width:760px;margin:auto;display:flex;justify-content:space-between;align-items:center}
+.brand{font-weight:900;letter-spacing:3px;font-size:19px}
+.brand span{color:var(--blue)}
+.status{font-size:9px;color:var(--green);letter-spacing:2px;margin-top:7px}
+.pill{border:1px solid var(--line);padding:8px 10px;border-radius:20px;color:var(--blue);font-size:10px}
+nav{
+ display:flex;gap:8px;overflow-x:auto;padding:13px 0 2px;
+ max-width:760px;margin:auto;scrollbar-width:none
+}
+nav button{
+ flex-shrink:0;background:var(--panel);border:1px solid var(--line);
+ color:var(--muted);padding:10px 13px;border-radius:9px;font-size:11px;
+ transition:.25s;
+}
+nav button.active,nav button:hover{
+ color:white;border-color:var(--blue);background:#142238;
+ box-shadow:0 0 15px #66d9ff18;
+}
+main{max-width:760px;margin:auto;padding:17px 14px 55px}
+.page{display:none;animation:enter .4s ease}
+.page.active{display:block}
+@keyframes enter{
+ from{opacity:0;transform:translateY(10px)}
+ to{opacity:1;transform:translateY(0)}
+}
+@keyframes glow{
+ 0%,100%{box-shadow:0 0 10px #66d9ff08}
+ 50%{box-shadow:0 0 25px #66d9ff20}
+}
+@keyframes shine{
+ from{background-position:200% 0}
+ to{background-position:-200% 0}
+}
+@keyframes levelup{
+ 0%{opacity:0;transform:scale(.6)}
+ 20%{opacity:1;transform:scale(1.08)}
+ 75%{opacity:1;transform:scale(1)}
+ 100%{opacity:0;transform:scale(1.2)}
+}
+.card{
+ background:linear-gradient(145deg,#121526f5,#0c0d19f5);
+ border:1px solid var(--line);border-radius:17px;
+ padding:18px;margin-bottom:13px;
+ animation:glow 5s infinite;
+}
+.hero{
+ background:linear-gradient(135deg,#172c48,#17142b 65%,#10111d);
+ position:relative;overflow:hidden;
+}
+.hero:after{
+ content:"";position:absolute;right:-55px;top:-85px;
+ width:200px;height:200px;border:1px solid #66d9ff35;
+ border-radius:50%;box-shadow:0 0 0 25px #66d9ff08,0 0 0 50px #66d9ff05;
+ pointer-events:none;
+}
+.eyebrow{font-size:10px;letter-spacing:2px;color:var(--blue)}
+h1{font-size:27px;letter-spacing:2px;margin:12px 0}
+h2{font-size:18px;margin:8px 0 12px}
+h3{font-size:14px;margin:0 0 8px}
+p{color:#aeb4ce;font-size:13px;line-height:1.65}
+.small{font-size:11px;color:var(--muted)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.level{font-size:35px;font-weight:900}
+.rank{color:var(--purple);font-size:12px;letter-spacing:2px}
+.bar{height:8px;border-radius:20px;background:#25283b;overflow:hidden;margin:12px 0}
+.fill{
+ height:100%;width:0;border-radius:20px;
+ background:linear-gradient(90deg,#558aff,#66e4ff,#b3a1ff);
+ background-size:200% 100%;animation:shine 4s linear infinite;
+ transition:width .7s cubic-bezier(.2,.8,.2,1);
+}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--panel2);padding:14px;border-radius:12px;border:1px solid #242740}
+.stat strong{font-size:24px;display:block;margin-top:8px}
+.statname{font-size:10px;letter-spacing:1px;color:var(--muted)}
+.sectiontitle{display:flex;justify-content:space-between;align-items:center;margin:24px 2px 12px}
+.sectiontitle h2{margin:0}
+.badge{font-size:10px;color:var(--blue);background:#17263a;padding:6px 9px;border-radius:20px}
+.quest{
+ display:flex;align-items:center;gap:12px;padding:14px 0;
+ border-bottom:1px solid #24263a;
+}
+.quest:last-child{border-bottom:0}
+.quest input{width:19px;height:19px;accent-color:#66d9ff;flex-shrink:0}
+.questtext{flex:1;font-size:13px}
+.questtext small{display:block;color:var(--muted);font-size:11px;margin-top:5px;line-height:1.5}
+.reward{font-size:11px;color:var(--blue);white-space:nowrap}
+.completed .questtext{text-decoration:line-through;color:var(--green)}
+.btn{
+ background:linear-gradient(110deg,#367dff,#735dff);
+ color:white;border:0;border-radius:10px;padding:12px 15px;
+ font-weight:bold;font-size:12px;transition:transform .2s,filter .2s;
+}
+.btn:active{transform:scale(.96)}
+.btn.secondary{background:#191c2e;border:1px solid var(--line);color:var(--text)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.full{width:100%}
+.case{transition:transform .25s,border-color .25s}
+.case:active{transform:scale(.985)}
+.caseid{font-size:10px;letter-spacing:2px;color:var(--purple)}
+.tag{display:inline-block;font-size:10px;color:var(--blue);border:1px solid #283650;padding:5px 8px;border-radius:20px;margin:3px 3px 3px 0}
+input[type=text],textarea,select{
+ width:100%;background:#090b16;border:1px solid var(--line);
+ border-radius:10px;padding:12px;color:var(--text);margin:7px 0 13px;
+ outline:none;
+}
+textarea{resize:vertical;min-height:90px}
+input:focus,textarea:focus,select:focus{border-color:var(--blue)}
+label{font-size:11px;color:var(--muted)}
+hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+.notice{padding:12px;border-radius:10px;background:#142337;color:#b9dfff;font-size:11px;line-height:1.6}
+footer{text-align:center;color:#555d78;font-size:10px;letter-spacing:2px;padding:25px 0}
+#toast{
+ position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);
+ background:#202840;border:1px solid #526eaa;border-radius:12px;
+ padding:13px 18px;font-size:12px;opacity:0;pointer-events:none;
+ transition:.3s;z-index:30;text-align:center;max-width:90%;
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#levelup{
+ display:none;position:fixed;inset:0;z-index:40;background:#050611eF;
+ align-items:center;justify-content:center;text-align:center;
+}
+#levelup.show{display:flex}
+.levelbox{animation:levelup 2.2s forwards}
+.levelbox h1{font-size:38px;color:var(--blue);text-shadow:0 0 30px #66d9ff80}
+@media(min-width:600px){main{padding-top:24px}.card{padding:22px}}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
+}
 </style>
 </head>
+
 <body>
 <header>
- <div class="tag">SYSTEM ONLINE // AWAKENING</div>
- <h1>SHADOW SYSTEM</h1>
- <div>YOUR REAL-LIFE LEVELING JOURNEY BEGINS.</div>
-</header>
-<main>
- <section class="card">
-  <div class="row"><div><div class="label">PLAYER</div><h2>THE AWAKENED</h2></div><div id="rank">E-RANK</div></div>
-  <div class="row"><span>LEVEL <b id="level">1</b></span><span><b id="xp">0</b> / 100 XP</span></div>
-  <div class="bar"><div class="fill" id="bar"></div></div>
- </section>
-
- <section class="card">
-  <div class="label">PLAYER ATTRIBUTES</div><br>
-  <div class="stats">
-   <div class="stat">💪 STRENGTH<b id="strength">1</b></div>
-   <div class="stat">⚡ AGILITY<b id="agility">1</b></div>
-   <div class="stat">🧠 INTELLIGENCE<b id="intelligence">1</b></div>
-   <div class="stat">🛡️ DISCIPLINE<b id="discipline">1</b></div>
+ <div class="headerrow">
+  <div>
+   <div class="brand">SHADOW <span>SYSTEM</span></div>
+   <div class="status">● SYSTEM ONLINE</div>
   </div>
- </section>
+  <div class="pill" id="headerLevel">LV. 1 · E-RANK</div>
+ </div>
+ <nav>
+  <button class="active" data-page="home">⌂ HOME</button>
+  <button data-page="quests">⚔ QUESTS</button>
+  <button data-page="challenges">♜ CHALLENGES</button>
+  <button data-page="files">◈ UNKNOWN FILES</button>
+  <button data-page="journal">▤ JOURNAL</button>
+ </nav>
+</header>
 
- <section class="card">
-  <div class="row"><div><div class="label">DAILY MISSIONS</div><h2>Today's Quests</h2></div><div>🎯</div></div>
-  <div id="quests"></div>
-  <p class="label">Complete a quest only after you actually do it.</p>
- </section>
+<main>
+<!-- HOME -->
+<section class="page active" id="home">
+ <div class="card hero">
+  <div class="eyebrow">PLAYER PROFILE // ACTIVE</div>
+  <h1>THE AWAKENED</h1>
+  <p>Your story changes when your actions change.</p>
+  <div class="row">
+   <div><div class="small">CURRENT LEVEL</div><div class="level" id="level">01</div></div>
+   <div style="text-align:right"><div class="small">CURRENT RANK</div><div class="rank" id="rank">E - RANK</div></div>
+  </div>
+  <div class="bar"><div class="fill" id="xpbar"></div></div>
+  <div class="row small"><span id="xptext">0 / 100 XP</span><span id="totaltext">0 TOTAL XP</span></div>
+ </div>
 
- <section class="card">
-  <div class="label">SPECIAL CHALLENGE</div>
-  <h2>7-Day Awakening</h2>
-  <p>Build consistency through training, learning, and recovery.</p>
-  <div id="streak">Day 1 — Start today.</div>
- </section>
+ <div class="sectiontitle"><h2>PLAYER ATTRIBUTES</h2><span class="badge">LIVE STATUS</span></div>
+ <div class="grid">
+  <div class="stat"><div class="statname">💪 STRENGTH</div><strong id="strength">1</strong></div>
+  <div class="stat"><div class="statname">⚡ AGILITY</div><strong id="agility">1</strong></div>
+  <div class="stat"><div class="statname">🧠 INTELLIGENCE</div><strong id="intelligence">1</strong></div>
+  <div class="stat"><div class="statname">🛡 DISCIPLINE</div><strong id="discipline">1</strong></div>
+ </div>
+
+ <div class="sectiontitle"><h2>TODAY'S PROGRESS</h2><span class="badge" id="progressCount">0 / 5</span></div>
+ <div class="card">
+  <div class="row"><span class="small">Daily quest completion</span><b id="progressPercent">0%</b></div>
+  <div class="bar"><div class="fill" id="progressbar"></div></div>
+  <p id="homeMessage">Your first mission is waiting.</p>
+  <button class="btn full" onclick="showPage('quests')">VIEW DAILY QUESTS →</button>
+ </div>
+
+ <div class="card">
+  <div class="eyebrow">UNKNOWN FILES</div>
+  <h2>One mystery. One investigation.</h2>
+  <p>Research unusual claims, collect reliable evidence, compare theories, and document what you discover.</p>
+  <button class="btn secondary full" onclick="showPage('files')">OPEN INVESTIGATION DIVISION →</button>
+ </div>
+</section>
+
+<!-- QUESTS -->
+<section class="page" id="quests">
+ <div class="eyebrow">MISSION CONTROL</div>
+ <h1>DAILY QUESTS</h1>
+ <p>Complete real tasks to earn experience. Quests reset on the next local calendar day.</p>
+ <div class="card">
+  <div class="row"><h2>Today's Missions</h2><span class="badge" id="questDate"></span></div>
+  <div id="questList"></div>
+  <hr>
+  <div class="row"><span class="small">Daily completion</span><b id="questSummary">0 / 5</b></div>
+  <div class="bar"><div class="fill" id="questbar"></div></div>
+  <p class="small">Only claim a mission after completing it. Rest and recovery count as productive choices too.</p>
+ </div>
+ <div class="notice">SYSTEM RULE: No XP penalty for missing a day. Start again when you're ready.</div>
+</section>
+
+<!-- CHALLENGES -->
+<section class="page" id="challenges">
+ <div class="eyebrow">SPECIAL MISSION DIVISION</div>
+ <h1>CHALLENGES</h1>
+ <p>Longer missions designed to reward consistency, not exhaustion.</p>
+ <div class="card">
+  <div class="caseid">CHALLENGE 001</div>
+  <h2>THE SEVEN-DAY AWAKENING</h2>
+  <p>Complete at least three daily quests on seven separate days. Days don't have to be consecutive.</p>
+  <div class="row"><span class="small">Days completed</span><b id="streakDays">0 / 7</b></div>
+  <div class="bar"><div class="fill" id="streakbar"></div></div>
+  <div class="small" id="streakStatus">Your first day starts when you complete three quests.</div>
+  <hr>
+  <button class="btn full" id="claimChallenge" onclick="claimChallenge()">CLAIM REWARD · 100 XP</button>
+ </div>
+ <div class="card">
+  <div class="caseid">CHALLENGE 002</div>
+  <h2>THE MYSTERY HUNTER</h2>
+  <p>Complete one research case with a question, evidence, at least two possible explanations, and a conclusion.</p>
+  <div class="row"><span class="small">Investigation progress</span><b id="caseCount">0 / 1</b></div>
+  <hr>
+  <button class="btn secondary full" onclick="showPage('files')">START A CASE →</button>
+ </div>
+ <div class="card">
+  <div class="caseid">CHALLENGE 003</div>
+  <h2>THE KNOWLEDGE SEEKER</h2>
+  <p>Finish three documented research sessions. Record what you learned and which sources support it.</p>
+  <div class="row"><span class="small">Research sessions</span><b id="researchCount">0 / 3</b></div>
+  <hr>
+  <button class="btn secondary full" onclick="showPage('journal')">OPEN RESEARCH JOURNAL →</button>
+ </div>
+</section>
+
+<!-- UNKNOWN FILES -->
+<section class="page" id="files">
+ <div class="eyebrow">RESTRICTED ARCHIVE // RESEARCH DIVISION</div>
+ <h1>UNKNOWN FILES</h1>
+ <p>Unexplained does not automatically mean supernatural. Investigate the evidence before deciding.</p>
+ <div class="notice">SAFE INVESTIGATION PROTOCOL: Use public information and accessible places. Never trespass, enter abandoned buildings, approach dangerous locations alone, or perform risky rituals.</div>
+
+ <div class="sectiontitle"><h2>RESEARCH BRANCHES</h2></div>
+ <div class="grid">
+  <div class="stat"><div class="statname">👻 BRANCH 01</div><h3>Paranormal</h3><p>Ghost reports, folklore, witness accounts.</p></div>
+  <div class="stat"><div class="statname">🌀 BRANCH 02</div><h3>Unusual abilities</h3><p>Claims about psychic powers and perception.</p></div>
+  <div class="stat"><div class="statname">🧩 BRANCH 03</div><h3>Unsolved mysteries</h3><p>Historical puzzles and strange discoveries.</p></div>
+  <div class="stat"><div class="statname">🔬 BRANCH 04</div><h3>Reality check</h3><p>Scientific evidence and alternative explanations.</p></div>
+ </div>
+
+ <div class="sectiontitle"><h2>OPEN A NEW CASE</h2><span class="badge">CASE FILE</span></div>
+ <div class="card">
+  <label for="caseBranch">RESEARCH BRANCH</label>
+  <select id="caseBranch">
+   <option>Paranormal</option>
+   <option>Unusual abilities</option>
+   <option>Unsolved mysteries</option>
+   <option>Scientific investigation</option>
+  </select>
+  <label for="caseTitle">CASE TITLE</label>
+  <input id="caseTitle" type="text" maxlength="100" placeholder="Example: The mystery of strange lights">
+  <label for="caseQuestion">RESEARCH QUESTION</label>
+  <textarea id="caseQuestion" maxlength="2000" placeholder="What exactly do you want to find out?"></textarea>
+  <button class="btn full" onclick="createCase()">＋ CREATE CASE FILE</button>
+ </div>
+
+ <div class="sectiontitle"><h2>YOUR CASE FILES</h2><span class="badge" id="caseTotal">0 FILES</span></div>
+ <div id="caseList"></div>
+ <div id="caseEditor" class="card" hidden>
+  <div class="row"><div><div class="caseid" id="editCaseId"></div><h2 id="editCaseTitle">Investigation</h2></div><button class="btn secondary" onclick="closeCase()">CLOSE</button></div>
+  <p id="editCaseQuestion"></p>
+  <label for="evidence">EVIDENCE AND SOURCES</label>
+  <textarea id="evidence" maxlength="5000" placeholder="Record observations, source names, dates, and what the evidence actually shows."></textarea>
+  <label for="theories">POSSIBLE EXPLANATIONS</label>
+  <textarea id="theories" maxlength="3000" placeholder="Compare at least two explanations. What supports or weakens each one?"></textarea>
+  <label for="verdict">CURRENT CONCLUSION</label>
+  <select id="verdict">
+   <option>Unresolved</option>
+   <option>Evidence supports the claim</option>
+   <option>Evidence does not support the claim</option>
+   <option>Ordinary explanation is more likely</option>
+  </select>
+  <button class="btn full" onclick="saveCase()">SAVE INVESTIGATION</button>
+  <p class="small">Save a complete case after documenting evidence, explanations, and a conclusion to earn the research reward.</p>
+ </div>
+</section>
+
+<!-- JOURNAL -->
+<section class="page" id="journal">
+ <div class="eyebrow">PERSONAL KNOWLEDGE ARCHIVE</div>
+ <h1>RESEARCH JOURNAL</h1>
+ <p>Record your findings so you can return to them later.</p>
+ <div class="card">
+  <label for="journalTitle">SESSION TITLE</label>
+  <input id="journalTitle" type="text" maxlength="100" placeholder="What did you research?">
+  <label for="journalNotes">WHAT DID YOU LEARN?</label>
+  <textarea id="journalNotes" maxlength="5000" placeholder="Write your findings and what remains unknown."></textarea>
+  <label for="journalSources">SOURCES USED</label>
+  <textarea id="journalSources" maxlength="2000" placeholder="Book titles, article names, research papers, or source links."></textarea>
+  <button class="btn full" onclick="saveJournal()">SAVE RESEARCH SESSION</button>
+ </div>
+ <div class="sectiontitle"><h2>PREVIOUS SESSIONS</h2><span class="badge" id="journalCount">0 ENTRIES</span></div>
+ <div id="journalList"></div>
+ <div class="card">
+  <h3>YOUR DATA</h3>
+  <p>Your current progress is stored in this browser on this device. Clearing browser storage or changing browsers can erase or separate your progress.</p>
+  <button class="btn secondary full" onclick="exportData()">EXPORT BACKUP FILE</button>
+ </div>
+</section>
+
+<footer>YOUR JOURNEY · YOUR DISCIPLINE · YOUR DISCOVERIES</footer>
 </main>
-<footer>YOUR JOURNEY. YOUR DISCIPLINE. YOUR SYSTEM.</footer>
+
+<div id="toast"></div>
+<div id="levelup"><div class="levelbox"><div class="eyebrow">SYSTEM NOTIFICATION</div><h1>LEVEL UP!</h1><p id="levelupText">LEVEL 02 UNLOCKED</p></div></div>
 
 <script>
+const $=id=>document.getElementById(id);
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const defaults={
+ xp:0,totalXP:0,level:1,
+ stats:{strength:1,agility:1,intelligence:1,discipline:1},
+ lastDate:today(),done:[],qualifiedDays:[],challengeClaimed:false,
+ cases:[],journals:[],researchRewardIds:[],caseRewardIds:[]
+};
+let data;
+try{data=Object.assign({},defaults,JSON.parse(localStorage.getItem("shadowSystemSave"))||{});
+ data.stats=Object.assign({},defaults.stats,data.stats);
+ data.cases=Array.isArray(data.cases)?data.cases:[];
+ data.journals=Array.isArray(data.journals)?data.journals:[];
+ data.done=Array.isArray(data.done)?data.done:[];
+ data.qualifiedDays=Array.isArray(data.qualifiedDays)?data.qualifiedDays:[];
+ data.researchRewardIds=Array.isArray(data.researchRewardIds)?data.researchRewardIds:[];
+ data.caseRewardIds=Array.isArray(data.caseRewardIds)?data.caseRewardIds:[];
+}catch{data=JSON.parse(JSON.stringify(defaults))}
+if(data.lastDate!==today()){data.lastDate=today();data.done=[]}
+function persist(){try{localStorage.setItem("shadowSystemSave",JSON.stringify(data))}catch(e){toast("Storage is full. Export a backup.");}}
 const missions=[
- {name:"Move your body",desc:"Do safe, suitable physical activity",xp:20,stat:"strength"},
- {name:"Train coordination",desc:"Practice balance or footwork safely",xp:15,stat:"agility"},
+ {name:"Move your body",desc:"Complete suitable physical activity",xp:20,stat:"strength"},
+ {name:"Practice coordination",desc:"Safely practise balance or footwork",xp:15,stat:"agility"},
  {name:"Study with focus",desc:"Complete one focused study session",xp:20,stat:"intelligence"},
  {name:"Complete a priority",desc:"Finish one important task",xp:15,stat:"discipline"},
  {name:"Recover properly",desc:"Take breaks and get enough rest",xp:15,stat:"discipline"}
 ];
-const today=()=>new Date().toLocaleDateString("en-CA");
-let data;
-try{data=JSON.parse(localStorage.getItem("shadowSave"))}catch{}
-if(!data||data.date!==today()){
- data={date:today(),level:1,xp:0,stats:{strength:1,agility:1,intelligence:1,discipline:1},done:[]};
+function toast(msg){$("toast").textContent=msg;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2300)}
+function showPage(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+ $(id).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});
 }
-function save(){localStorage.setItem("shadowSave",JSON.stringify(data))}
-function render(){
- document.getElementById("level").textContent=data.level;
- document.getElementById("xp").textContent=data.xp;
- document.getElementById("bar").style.width=data.xp+"%";
- document.getElementById("rank").textContent=data.level>=20?"S-RANK":data.level>=10?"A-RANK":data.level>=5?"C-RANK":"E-RANK";
- for(let s in data.stats)document.getElementById(s).textContent=data.stats[s];
- document.getElementById("quests").innerHTML=missions.map((m,i)=>`
- <label class="quest">
- <input type="checkbox" ${data.done.includes(i)?"checked":""} ${data.done.includes(i)?"disabled":""} onchange="complete(${i})">
- <span>${m.name}<small>${m.desc} · +${m.xp} XP</small></span>
- </label>`).join("");
- document.getElementById("streak").textContent="Day 1 — Every journey starts with one step.";
-}
-function complete(i){
- if(data.done.includes(i))return;
- data.done.push(i);data.xp+=missions[i].xp;
- data.stats[missions[i].stat]++;
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+function rankFor(l){return l>=50?"S-RANK":l>=30?"A-RANK":l>=20?"B-RANK":l>=10?"C-RANK":l>=5?"D-RANK":"E-RANK"}
+function addXP(n,stat){
+ const old=data.level;
+ data.xp+=n;data.totalXP+=n;
+ if(stat)data.stats[stat]++;
  while(data.xp>=100){data.xp-=100;data.level++}
- save();render();
+ persist();render();
+ if(data.level>old){$("levelupText").textContent="LEVEL "+String(data.level).padStart(2,"0")+" UNLOCKED";$("levelup").classList.add("show");setTimeout(()=>$("levelup").classList.remove("show"),2200)}
 }
-render();
-</script>
-</body>
-</html>
+function render(){
+ const rank=rankFor(data.level);
+ $("level").textContent=String(data.level).padStart(2,"0");
+ $("rank").textContent=rank;$("headerLevel").textContent="LV. "+data.level+" · "+rank;
+ $("xptext").textContent=data.xp+" / 100 XP";
+ $("totaltext").textContent=data.totalXP+" TOTAL XP";
+ $("xpbar").style.width=data.xp+"%";
+ for(const s in data.stats)$(s).textContent=data.stats[s];
+ const count=data.done.length,percent=Math.round(count/missions.length*100);
+ $("progressCount").textContent=count+" / "+missions.length;
+ $("progressPercent").textContent=percent+"%";
+ $("progressbar").style.width=percent+"%";
+ $("homeMessage").textContent=count===5?"All daily missions completed. Excellent discipline.":count===0?"Your first mission is waiting.": "You've completed "+count+" mission"+(count===1?"":"s")+". Keep going at your own pace.";
+ $("questDate").textContent=today();
+ $("questList").innerHTML=missions.map((m,i)=>`<label class="quest ${data.done.includes(i)?"completed":""}"><input type="checkbox" ${data.done.
