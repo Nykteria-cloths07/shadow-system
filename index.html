@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SHADOW SYSTEM</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#05070d;color:#eaf4ff;font-family:Arial,sans-serif}
+header{padding:25px 18px;background:linear-gradient(135deg,#101d35,#05070d);border-bottom:1px solid #244b79}
+.tag{color:#48c8ff;letter-spacing:4px;font-size:11px}
+h1{font-size:30px;letter-spacing:3px;margin:12px 0}
+main{max-width:700px;margin:auto;padding:18px}
+.card{background:#0c1220;border:1px solid #20334e;border-radius:15px;padding:18px;margin:14px 0;animation:appear .6s ease}
+@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.label{font-size:12px;color:#8fa9c9;letter-spacing:2px}
+.row{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.bar{height:9px;background:#1b2639;border-radius:10px;overflow:hidden;margin-top:12px}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#168cff,#55e7ff);transition:width .5s}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{padding:13px;background:#101b2d;border-radius:10px}
+.stat b{display:block;font-size:22px;margin-top:7px}
+.quest{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid #1b293e}
+.quest:last-child{border:0}
+.quest input{width:20px;height:20px;accent-color:#32c9ff}
+.quest small{display:block;color:#8fa9c9;margin-top:5px}
+button{background:#087cc2;color:white;border:0;border-radius:8px;padding:12px 15px;font-weight:bold}
+button:active{transform:scale(.96)}
+.done{color:#5be8b0}
+footer{text-align:center;color:#637995;font-size:11px;padding:25px}
+</style>
+</head>
+<body>
+<header>
+ <div class="tag">SYSTEM ONLINE // AWAKENING</div>
+ <h1>SHADOW SYSTEM</h1>
+ <div>YOUR REAL-LIFE LEVELING JOURNEY BEGINS.</div>
+</header>
+<main>
+ <section class="card">
+  <div class="row"><div><div class="label">PLAYER</div><h2>THE AWAKENED</h2></div><div id="rank">E-RANK</div></div>
+  <div class="row"><span>LEVEL <b id="level">1</b></span><span><b id="xp">0</b> / 100 XP</span></div>
+  <div class="bar"><div class="fill" id="bar"></div></div>
+ </section>
+
+ <section class="card">
+  <div class="label">PLAYER ATTRIBUTES</div><br>
+  <div class="stats">
+   <div class="stat">💪 STRENGTH<b id="strength">1</b></div>
+   <div class="stat">⚡ AGILITY<b id="agility">1</b></div>
+   <div class="stat">🧠 INTELLIGENCE<b id="intelligence">1</b></div>
+   <div class="stat">🛡️ DISCIPLINE<b id="discipline">1</b></div>
+  </div>
+ </section>
+
+ <section class="card">
+  <div class="row"><div><div class="label">DAILY MISSIONS</div><h2>Today's Quests</h2></div><div>🎯</div></div>
+  <div id="quests"></div>
+  <p class="label">Complete a quest only after you actually do it.</p>
+ </section>
+
+ <section class="card">
+  <div class="label">SPECIAL CHALLENGE</div>
+  <h2>7-Day Awakening</h2>
+  <p>Build consistency through training, learning, and recovery.</p>
+  <div id="streak">Day 1 — Start today.</div>
+ </section>
+</main>
+<footer>YOUR JOURNEY. YOUR DISCIPLINE. YOUR SYSTEM.</footer>
+
+<script>
+const missions=[
+ {name:"Move your body",desc:"Do safe, suitable physical activity",xp:20,stat:"strength"},
+ {name:"Train coordination",desc:"Practice balance or footwork safely",xp:15,stat:"agility"},
+ {name:"Study with focus",desc:"Complete one focused study session",xp:20,stat:"intelligence"},
+ {name:"Complete a priority",desc:"Finish one important task",xp:15,stat:"discipline"},
+ {name:"Recover properly",desc:"Take breaks and get enough rest",xp:15,stat:"discipline"}
+];
+const today=()=>new Date().toLocaleDateString("en-CA");
+let data;
+try{data=JSON.parse(localStorage.getItem("shadowSave"))}catch{}
+if(!data||data.date!==today()){
+ data={date:today(),level:1,xp:0,stats:{strength:1,agility:1,intelligence:1,discipline:1},done:[]};
+}
+function save(){localStorage.setItem("shadowSave",JSON.stringify(data))}
+function render(){
+ document.getElementById("level").textContent=data.level;
+ document.getElementById("xp").textContent=data.xp;
+ document.getElementById("bar").style.width=data.xp+"%";
+ document.getElementById("rank").textContent=data.level>=20?"S-RANK":data.level>=10?"A-RANK":data.level>=5?"C-RANK":"E-RANK";
+ for(let s in data.stats)document.getElementById(s).textContent=data.stats[s];
+ document.getElementById("quests").innerHTML=missions.map((m,i)=>`
+ <label class="quest">
+ <input type="checkbox" ${data.done.includes(i)?"checked":""} ${data.done.includes(i)?"disabled":""} onchange="complete(${i})">
+ <span>${m.name}<small>${m.desc} · +${m.xp} XP</small></span>
+ </label>`).join("");
+ document.getElementById("streak").textContent="Day 1 — Every journey starts with one step.";
+}
+function complete(i){
+ if(data.done.includes(i))return;
+ data.done.push(i);data.xp+=missions[i].xp;
+ data.stats[missions[i].stat]++;
+ while(data.xp>=100){data.xp-=100;data.level++}
+ save();render();
+}
+render();
+</script>
+</body>
+</html>
